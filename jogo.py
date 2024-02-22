@@ -40,7 +40,7 @@ class Heroi(Personagem):
     def ataque_especial(self, alvo):
         dano = self.get_nivel() * 5
         alvo.receber_ataque(dano)
-        print(f"{self.get_nome()} usou a habilidade especial {self.get_habilidade()} em {alvo.get_nome()} e causou {dano} de dano!")
+        print(f"{self.get_nome()} usou a habilidade especial de {self.get_habilidade()} em {alvo.get_nome()} e causou {dano} de dano!")
 
 class Inimigo(Personagem):
     def __init__(self, nome, vida, nivel, tipo):
@@ -57,7 +57,7 @@ class Jogo:
     ''' Classe orquestradora do jogo '''
     def __init__(self) -> None:
         self.heroi = Heroi(nome="Yasuo", vida=100, nivel=6, habilidade="Ficar /10")
-        self.inimigo = Inimigo(nome="Riven", vida=50, nivel=6, tipo="Lutador")
+        self.inimigo = Inimigo(nome="Riven", vida=50, nivel=100, tipo="Lutador")
 
     def iniciar_batalha(self):
         """ Fazer a gestão da batalha em turnos """
@@ -76,6 +76,10 @@ class Jogo:
                 self.heroi.ataque_especial(self.inimigo)
             else:
                 print("Escolha inválida. Escolha novamente.")
+
+            if self.inimigo.get_vida() > 0:
+                # Inimigo ataca
+                self.inimigo.atacar(self.heroi)
 
         if self.heroi.get_vida() > 0:
             print("\nParabéns, você venceu a batalha!")
